@@ -35,20 +35,20 @@
 
 <script>
 import draftChip from '~/components/posts/draftChip'
-import client from '~/plugins/contentful'
 import { mapGetters } from 'vuex'
 
 export default {
   components: {
     draftChip
   },
-  async asyncData({ env, params }) {
-    let currentPost = null
-    await client.getEntries({
-      content_type: env.CTF_BLOG_POST_TYPE_ID,
-      'fields.slug': params.slug
-    }).then(res => (currentPost = res.items[0])).catch(console.error)
-    return { currentPost }
+  async asyncData({ payload, store, params, error }) {
+    const currentPost = payload || await store.state.posts.find(post => post.fields.slug === params.slug)
+
+    if (currentPost) {
+      return { currentPost }
+    } else {
+      return error({ statusCode: 400 })
+    }
   },
   computed: {
     ...mapGetters(['setEyeCatch', 'draftChip'])

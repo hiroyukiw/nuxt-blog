@@ -68,27 +68,14 @@
 
 <script>
 import draftChip from '~/components/posts/draftChip'
-import client from '~/plugins/contentful'
-import { mapGetters } from 'vuex'
-
+import { mapState, mapGetters } from 'vuex' 
 
 export default {
   components: {
     draftChip
   },
-  async asyncData({ env }) {
-    let posts = []
-    await client.getEntries({
-      content_type: env.CTF_BLOG_POST_TYPE_ID,
-      order: '-fields.publishDate'
-    }).then(res => (posts = res.items)).catch(console.error)
-    return { posts }
-  },
   computed: {
-    ...mapGetters(['setEyeCatch', 'draftChip']),
-    linkTo: () => (obj) => {
-      return { name: 'posts-slug', params: { slug: obj.fields.slug } }
-    }
-  },
+    ...mapState(['posts']), 
+    ...mapGetters(['setEyeCatch', 'draftChip', 'linkTo'])
 }
 </script>
