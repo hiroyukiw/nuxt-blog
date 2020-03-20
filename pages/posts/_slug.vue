@@ -38,6 +38,9 @@ import draftChip from '~/components/posts/draftChip'
 import { mapGetters } from 'vuex'
 
 export default {
+  computed: {
+    ...mapGetters(['setEyeCatch','draftChip'])
+  },
   components: {
     draftChip
   },
@@ -49,9 +52,6 @@ export default {
     } else {
       return error({ statusCode: 400 })
     }
-  },
-  computed: {
-    ...mapGetters(['setEyeCatch', 'draftChip'])
-  },
+  }
 }
 </script>

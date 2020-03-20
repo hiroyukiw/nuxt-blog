@@ -114,4 +114,5 @@ export default {
       'getContentful'
     ]
   },
+  axios: {},
 }

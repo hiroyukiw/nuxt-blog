@@ -50,7 +50,7 @@
                 <v-btn
                   text
                   color="primary"
-                  :to="linkTo(post)"
+                  :to="linkTo(`posts`,post)"
                 >
                   この記事をみる
                 </v-btn>
@@ -77,5 +77,6 @@ export default {
   computed: {
     ...mapState(['posts']), 
     ...mapGetters(['setEyeCatch', 'draftChip', 'linkTo'])
+  }
 }
 </script>
