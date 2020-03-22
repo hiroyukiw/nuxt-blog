@@ -11,8 +11,8 @@
       >
         <v-row v-if="posts.length">
           <v-col
-            v-for="(post, i) in posts"
-            :key="i"
+            v-for="post in (displayLists)"
+            :key="post.index"
             cols="12"
             sm="6"
             lg="4"
@@ -105,6 +105,11 @@
         </div>
       </v-col>
     </v-row>
+    <v-pagination
+      v-model="page"
+      :length="length"
+      @input = "pageChange"
+    ></v-pagination>
   </v-container>
 </template>
 
@@ -113,6 +118,14 @@ import draftChip from '~/components/posts/draftChip'
 import { mapState, mapGetters } from 'vuex' 
 
 export default {
+  data () {
+    return {
+      page: 1,
+      length:0,
+      displayLists: [],
+      pageSize: 10,
+    }
+  },
   components: {
     draftChip
   },
@@ -129,6 +142,17 @@ export default {
         }
       }
     }
-  }
+  },
+  mounted: function(){
+    this.posts
+    this.length = Math.ceil(this.posts.length/this.pageSize);
+    this.displayLists = this.posts.slice(0,this.pageSize);
+    this.displayLists = this.posts.slice(this.pageSize*(this.page -1), this.pageSize*(this.page));
+  },
+  methods: {
+    pageChange: function(pageNumber){
+      this.displayLists = this.posts.slice(this.pageSize*(pageNumber -1), this.pageSize*(pageNumber));
+    },
+  },
 }
 </script>

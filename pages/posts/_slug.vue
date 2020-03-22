@@ -6,6 +6,7 @@
           <v-icon>mdi-chevron-right</v-icon>
         </template>
       </v-breadcrumbs>
+      
       {{ currentPost.fields.title }}
       <v-img
         :src="setEyeCatch(currentPost).url"
